@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Brand – ABC Garments</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header nav same as index -->
+
+  <main>
+    <h1>Brand: <span id="brandName"></span></h1>
+    <div class="product-grid" id="productGrid">
+      <!-- Products for the selected brand are injected here via JS -->
+    </div>
+  </main>
+
+  <script>
+    // Parse query string to get brand
+    const params = new URLSearchParams(location.search);
+    const brand = params.get('b');
+    document.getElementById('brandName').textContent = brand;
+
+    // Example product data (replace or fetch from server)
+    const sampleProducts = [
+      { id: 101, brand: 'VanHeusen', name: 'Formal Shirt', price: 2999, img: 'van1.jpg' },
+      { id: 102, brand: 'VanHeusen', name: 'Casual Tee', price: 1999, img: 'van2.jpg' },
+      { id: 201, brand: 'Levis', name: 'Denim Jeans', price: 3999, img: 'levis1.jpg' },
+      // ...
+    ];
+
+    const grid = document.getElementById('productGrid');
+    sampleProducts
+      .filter(prod => prod.brand === brand)
+      .forEach(prod => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+          <img src="${prod.img}" alt="${prod.name}">
+          <h3>${prod.name}</h3>
+          <p>₨${prod.price}</p>
+          <a href="product.html?id=${prod.id}">Details</a>
+          <label><input type="checkbox" class="compareBox" value="${prod.id}"> Compare</label>
+        `;
+        grid.appendChild(card);
+      });
+  </script>
+</body>
+</html>

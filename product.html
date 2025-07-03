@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Product Details – ABC Garments</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header nav -->
+
+  <main>
+    <div id="productDetail"></div>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const id = params.get('id');
+
+    const sampleProducts = {
+      101: { name: 'Formal Shirt', price: 2999, img: 'van1.jpg', summary: 'Slim-fit, cotton.' },
+      102: { name: 'Casual Tee', price: 1999, img: 'van2.jpg', summary: 'Comfy and cool.' }
+    };
+
+    const prod = sampleProducts[id];
+    const container = document.getElementById('productDetail');
+    container.innerHTML = `
+      <h1>${prod.name}</h1>
+      <img src="${prod.img}" alt="${prod.name}">
+      <p><strong>Price:</strong> ₨${prod.price}</p>
+      <p>${prod.summary}</p>
+      <a href="specs_${id}.docx" download>Download Full Specifications</a>
+    `;
+  </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Compare Products</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header nav -->
+
+  <main>
+    <h1>Compare Selected Products</h1>
+    <div id="compareTableContainer"></div>
+  </main>
+
+  <script>
+    const chosen = JSON.parse(sessionStorage.getItem('compareList') || '[]');
+    const sampleProducts = {
+      101: { name: 'Formal Shirt', brand: 'VanHeusen', price: 2999, fabric: 'Cotton' },
+      201: { name: 'Denim Jeans', brand: 'Levis', price: 3999, fabric: 'Denim' }
+    };
+
+    if (chosen.length < 2) {
+      document.getElementById('compareTableContainer').innerHTML = '<p>Please select at least two products to compare.</p>';
+    } else {
+      let html = '<table><tr><th>Feature</th>';
+      chosen.forEach(id => html += `<th>${sampleProducts[id].name}</th>`);
+      html += '</tr>';
+
+      ['brand','price','fabric'].forEach(attr => {
+        html += `<tr><td>${attr.charAt(0).toUpperCase()+attr.slice(1)}</td>`;
+        chosen.forEach(id => html += `<td>${sampleProducts[id][attr]}</td>`);
+        html += '</tr>';
+      });
+
+      html += '</table>';
+      document.getElementById('compareTableContainer').innerHTML = html;
+    }
+  </script>
+</body>
+</html>
